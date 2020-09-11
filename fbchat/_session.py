@@ -173,9 +173,7 @@ def session_factory(domain: str, user_agent: Optional[str] = None) -> aiohttp.Cl
         http_proxy = urllib.request.getproxies()["http"]
     except KeyError:
         http_proxy = None
-    return aiohttp.ClientSession(connector=(ProxyConnector.from_url(http_proxy)
-                                            if ProxyConnector and http_proxy
-                                            else None),
+    return aiohttp.ClientSession(trust_env=True,
                                  headers={
                                      "Referer": f"https://www.{domain}/",
                                      "User-Agent": user_agent or f"fbchat-asyncio/{__version__}",
